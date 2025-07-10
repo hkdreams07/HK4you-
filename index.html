@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My AI Assistant</title>
+  <style>
+    body { background-color: #111; color: #0f0; font-family: monospace; padding: 20px; }
+    input, button { padding: 10px; font-size: 1rem; }
+    #response { margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h1>🤖 Talk to AI</h1>
+  <input id="input" type="text" placeholder="Say something..." />
+  <button onclick="ask()">Send</button>
+  <div id="response">AI: Ready to chat...</div>
+
+  <script>
+    async function ask() {
+      const message = document.getElementById("input").value;
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ message })
+      });
+      const data = await res.json();
+      document.getElementById("response").innerText = "AI: " + data.reply;
+    }
+  </script>
+</body>
+</html>
